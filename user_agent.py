@@ -60,7 +60,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
         #         if row >= 19 or row <= -1 or col >= 19 or col <= -1:
         #             continue
         #         if state.game_board[row][col] == -1:
-        #             score01 -= 0.5
+        #             score01 -= 1
 
         sum_score += score01
 
@@ -84,7 +84,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
             if nx >= 19 or nx <= -1 or ny >= 19 or ny <= -1:
                 continue
             if state.game_board[ny][nx] == -1:
-                score02 -= 50
+                score02 -= 100 - 1
 
         sum_score += score02
 
@@ -108,19 +108,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
                     score03 += base_score
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 1:
-                    score03 += base_score * 4
+                    score03 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -138,19 +138,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
                     score03 += base_score
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 1:
-                    score03 += base_score * 4
+                    score03 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -185,19 +185,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score03 += base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 4
+                    score03 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -232,24 +232,24 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score03 += base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 += base_score * 2
+                    score03 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 0.1
+                    score03 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 += base_score * 4
+                    score03 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
         # 방어
-        base_score = 5000
+        base_score = 10000 - 1
         # 가로
         for col in range(opponent_last_stone[0] - 2, opponent_last_stone[0] + 1):
             row = opponent_last_stone[1]
@@ -264,19 +264,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
                     score03 -= base_score
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == -1:
-                    score03 -= base_score * 4
+                    score03 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -294,19 +294,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
                     score03 -= base_score
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == -1:
-                    score03 -= base_score * 4
+                    score03 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -341,19 +341,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score03 -= base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 4
+                    score03 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -388,23 +388,23 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score03 -= base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score03 -= base_score * 2
+                    score03 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score03 -= base_score * 0.1
+                    score03 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score03 -= base_score * 4
+                    score03 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
-        sum_score += score03
+        sum_score += int(score03)
 
         # score04 = 4개 연속을 만들 수 있으면 가능한 개수만큼 점수 부여
         score04 = 0
@@ -426,19 +426,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
                     score04 += base_score
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 1:
-                    score04 += base_score * 4
+                    score04 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -456,19 +456,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
                     score04 += base_score
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 1:
-                    score04 += base_score * 4
+                    score04 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -503,19 +503,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score04 += base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 4
+                    score04 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -550,24 +550,24 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score04 += base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 += base_score * 2
+                    score04 += base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 0.1
+                    score04 += base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 += base_score * 4
+                    score04 += base_score * 2
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
         # 방어
-        base_score = 500000
+        base_score = 1000000 - 1
         # 가로
         for col in range(opponent_last_stone[0] - 3, opponent_last_stone[0] + 1):
             row = opponent_last_stone[1]
@@ -582,19 +582,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
                     score04 -= base_score
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == -1:
-                    score04 -= base_score * 4
+                    score04 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -612,19 +612,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
                     score04 -= base_score
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == -1:
-                    score04 -= base_score * 4
+                    score04 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -659,19 +659,19 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score04 -= base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 4
+                    score04 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -706,38 +706,37 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
                     score04 -= base_score
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.5
                 elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
-                    score04 -= base_score * 2
+                    score04 -= base_score * 1.5
                 elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
-                    score04 -= base_score * 0.1
+                    score04 -= base_score * 0.75
                 elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
-                    score04 -= base_score * 4
+                    score04 -= base_score * 2
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
-        sum_score += score04
+        sum_score += int(score04)
 
         # score05 = 5개 연속을 만들 수 있으면 점수 부여
         score05 = 0
 
         # 공격
-        base_score = float('inf')
+        base_score = 100000000
         # 가로
         for col in range(my_last_stone[0] - 4, my_last_stone[0] + 1):
             row = my_last_stone[1]
             if col >= 19 or col <= -1:
                 continue
             if np.sum(state.game_board[row, col:col + 5]) == 5:
-                score05 += 100000000
-                score05 = base_score
-                return score05, (0, 0)
+                score05 += base_score
+                # return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -747,9 +746,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
             if row >= 19 or row <= -1:
                 continue
             if np.sum(state.game_board[row:row + 5, col]) == 5:
-                score05 += 100000000
-                score05 = base_score
-                return score05, (0, 0)
+                score05 += base_score
+                # return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -774,9 +772,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[copied_row, copied_col] == 1:
                     count_sum += 1
             if count_sum == 5:
-                score05 += 100000000
-                score05 = base_score
-                return score05, (0, 0)
+                score05 += base_score
+                # return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -801,22 +798,20 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[copied_row, copied_col] == 1:
                     count_sum += 1
             if count_sum == 5:
-                score05 += 100000000
-                score05 = base_score
-                return score05, (0, 0)
+                score05 += base_score
+                # return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
         # 방어
-        base_score = float('-inf')
+        base_score = 100000000 - 1
         # 가로
         for col in range(opponent_last_stone[0] - 4, opponent_last_stone[0] + 1):
             row = opponent_last_stone[1]
             if col >= 19 or col <= -1:
                 continue
             if np.sum(state.game_board[row, col:col + 5]) == -5:
-                # score05 -= 50000000
-                score05 = base_score
+                score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -826,8 +821,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
             if row >= 19 or row <= -1:
                 continue
             if np.sum(state.game_board[row:row + 5, col]) == -5:
-                # score05 -= 50000000
-                score05 = base_score
+                score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -852,8 +846,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[copied_row, copied_col] == -1:
                     count_sum += 1
             if count_sum == 5:
-                # score05 -= 50000000
-                score05 = base_score
+                score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -878,8 +871,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 if state.game_board[copied_row, copied_col] == -1:
                     count_sum += 1
             if count_sum == 5:
-                # score05 -= 50000000
-                score05 = base_score
+                score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
