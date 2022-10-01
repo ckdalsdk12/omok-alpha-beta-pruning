@@ -66,27 +66,312 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
 
         # score02 = 2개 연속을 만들 수 있으면 가능한 개수만큼 점수 부여
         score02 = 0
-        dx = [-1, 1, 0, 0, -1, 1, 1, -1]
-        dy = [0, 0, -1, 1, -1, 1, -1, 1]
 
-        for i in range(0, 8):
-            # 공격
-            nx = my_last_stone[0] + dx[i]
-            ny = my_last_stone[1] + dy[i]
-            if nx >= 19 or nx <= -1 or ny >= 19 or ny <= -1:
+        # 공격
+        base_score = 100
+        # 가로
+        for col in range(my_last_stone[0] - 1, my_last_stone[0] + 1):
+            row = my_last_stone[1]
+            if col >= 19 or col <= -1:
                 continue
-            if state.game_board[ny][nx] == 1:
-                score02 += 100
+            if np.sum(state.game_board[row, col:col + 2]) == 2:
+                out_01 = col - 1
+                out_02 = col + 2
+                if out_01 >= 19 or out_01 <= -1 or out_02 >= 19 or out_02 <= -1:
+                    continue
+                if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
+                    score02 += base_score
+                elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
+                    score02 += base_score * 1.5
+                elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
+                    score02 += base_score * 1.5
+                elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
+                    score02 += base_score * 0.5
+                elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
+                    score02 += base_score * 0.5
+                elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
+                    score02 += base_score * 0.75
+                elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
+                    score02 += base_score * 0.75
+                elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 1:
+                    score02 += base_score * 2
+                # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
+                # print("가로")  # 디버깅
 
-            # 방어
-            nx = opponent_last_stone[0] + dx[i]
-            ny = opponent_last_stone[1] + dy[i]
-            if nx >= 19 or nx <= -1 or ny >= 19 or ny <= -1:
+        # 세로
+        for row in range(my_last_stone[1] - 1, my_last_stone[1] + 1):
+            col = my_last_stone[0]
+            if row >= 19 or row <= -1:
                 continue
-            if state.game_board[ny][nx] == -1:
-                score02 -= 100 - 1
+            if np.sum(state.game_board[row:row + 2, col]) == 2:
+                out_01 = row - 1
+                out_02 = row + 2
+                if out_01 >= 19 or out_01 <= -1 or out_02 >= 19 or out_02 <= -1:
+                    continue
+                if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
+                    score02 += base_score
+                elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 1:
+                    score02 += base_score * 2
+                # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
+                # print("세로")  # 디버깅
 
-        sum_score += score02
+        # 대각선 좌(상)우(하)
+        for i in range(-1, 1):
+            row = my_last_stone[1]
+            col = my_last_stone[0]
+            count_sum = 0
+            row += i
+            col += i
+            if row >= 19 or row <= -1:
+                continue
+            if col >= 19 or col <= -1:
+                continue
+            for j in range(2):
+                copied_row = row + j
+                copied_col = col + j
+                if copied_row >= 19 or copied_row <= -1:
+                    continue
+                if copied_col >= 19 or copied_col <= -1:
+                    continue
+                if state.game_board[copied_row, copied_col] == 1:
+                    count_sum += 1
+            if count_sum == 2:
+                out_01 = (row - 1, col - 1)
+                out_02 = (row + 2, col + 2)
+                if out_01[0] >= 19 or out_01[0] <= -1 or out_01[1] >= 19 or out_01[1] <= -1:
+                    continue
+                if out_02[0] >= 19 or out_02[0] <= -1 or out_02[1] >= 19 or out_02[1] <= -1:
+                    continue
+                if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 2
+                # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
+                # print("대각선(좌우)")  # 디버깅
+
+        # 대각선 우(상)좌(하)
+        for i in range(-1, 1):
+            row = my_last_stone[1]
+            col = my_last_stone[0]
+            count_sum = 0
+            row -= i
+            col += i
+            if row >= 19 or row <= -1:
+                continue
+            if col >= 19 or col <= -1:
+                continue
+            for j in range(2):
+                copied_row = row - j
+                copied_col = col + j
+                if copied_row >= 19 or copied_row <= -1:
+                    continue
+                if copied_col >= 19 or copied_col <= -1:
+                    continue
+                if state.game_board[copied_row, copied_col] == 1:
+                    count_sum += 1
+            if count_sum == 2:
+                out_01 = (row + 1, col - 1)
+                out_02 = (row - 2, col + 2)
+                if out_01[0] >= 19 or out_01[0] <= -1 or out_01[1] >= 19 or out_01[1] <= -1:
+                    continue
+                if out_02[0] >= 19 or out_02[0] <= -1 or out_02[1] >= 19 or out_02[1] <= -1:
+                    continue
+                if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 += base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 += base_score * 2
+                # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
+                # print("대각선(우좌)")  # 디버깅
+
+        # 방어
+        base_score = 100 - 1
+        # 가로
+        for col in range(opponent_last_stone[0] - 1, opponent_last_stone[0] + 1):
+            row = opponent_last_stone[1]
+            if col >= 19 or col <= -1:
+                continue
+            if np.sum(state.game_board[row, col:col + 2]) == -2:
+                out_01 = col - 1
+                out_02 = col + 2
+                if out_01 >= 19 or out_01 <= -1 or out_02 >= 19 or out_02 <= -1:
+                    continue
+                if state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 0:
+                    score02 -= base_score
+                elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == 1:
+                    score02 -= base_score * 0.5
+                elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == 0:
+                    score02 -= base_score * 0.5
+                elif state.game_board[row][out_01] == 0 and state.game_board[row][out_02] == -1:
+                    score02 -= base_score * 1.5
+                elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 0:
+                    score02 -= base_score * 1.5
+                elif state.game_board[row][out_01] == 1 and state.game_board[row][out_02] == -1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == 1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[row][out_01] == -1 and state.game_board[row][out_02] == -1:
+                    score02 -= base_score * 2
+                # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
+                # print("가로")  # 디버깅
+
+        # 세로
+        for row in range(opponent_last_stone[1] - 1, opponent_last_stone[1] + 1):
+            col = opponent_last_stone[0]
+            if row >= 19 or row <= -1:
+                continue
+            if np.sum(state.game_board[row:row + 2, col]) == -2:
+                out_01 = row - 1
+                out_02 = row + 2
+                if out_01 >= 19 or out_01 <= -1 or out_02 >= 19 or out_02 <= -1:
+                    continue
+                if state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 0:
+                    score02 -= base_score
+                elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == 1:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == 0:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01][col] == 0 and state.game_board[out_02][col] == -1:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 0:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01][col] == 1 and state.game_board[out_02][col] == -1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == 1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01][col] == -1 and state.game_board[out_02][col] == -1:
+                    score02 -= base_score * 2
+                # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
+                # print("세로")  # 디버깅
+
+        # 대각선 좌(상)우(하)
+        for i in range(-1, 1):
+            row = opponent_last_stone[1]
+            col = opponent_last_stone[0]
+            count_sum = 0
+            row += i
+            col += i
+            if row >= 19 or row <= -1:
+                continue
+            if col >= 19 or col <= -1:
+                continue
+            for j in range(2):
+                copied_row = row + j
+                copied_col = col + j
+                if copied_row >= 19 or copied_row <= -1:
+                    continue
+                if copied_col >= 19 or copied_col <= -1:
+                    continue
+                if state.game_board[copied_row, copied_col] == -1:
+                    count_sum += 1
+            if count_sum == 2:
+                out_01 = (row - 1, col - 1)
+                out_02 = (row + 2, col + 2)
+                if out_01[0] >= 19 or out_01[0] <= -1 or out_01[1] >= 19 or out_01[1] <= -1:
+                    continue
+                if out_02[0] >= 19 or out_02[0] <= -1 or out_02[1] >= 19 or out_02[1] <= -1:
+                    continue
+                if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 2
+                # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
+                # print("대각선(좌우)")  # 디버깅
+
+        # 대각선 우(상)좌(하)
+        for i in range(-1, 1):
+            row = opponent_last_stone[1]
+            col = opponent_last_stone[0]
+            count_sum = 0
+            row -= i
+            col += i
+            if row >= 19 or row <= -1:
+                continue
+            if col >= 19 or col <= -1:
+                continue
+            for j in range(2):
+                copied_row = row - j
+                copied_col = col + j
+                if copied_row >= 19 or copied_row <= -1:
+                    continue
+                if copied_col >= 19 or copied_col <= -1:
+                    continue
+                if state.game_board[copied_row, copied_col] == -1:
+                    count_sum += 1
+            if count_sum == 2:
+                out_01 = (row + 1, col - 1)
+                out_02 = (row - 2, col + 2)
+                if out_01[0] >= 19 or out_01[0] <= -1 or out_01[1] >= 19 or out_01[1] <= -1:
+                    continue
+                if out_02[0] >= 19 or out_02[0] <= -1 or out_02[1] >= 19 or out_02[1] <= -1:
+                    continue
+                if state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score * 0.5
+                elif state.game_board[out_01[0]][out_01[1]] == 0 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 0:
+                    score02 -= base_score * 1.5
+                elif state.game_board[out_01[0]][out_01[1]] == 1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == 1:
+                    score02 -= base_score * 0.75
+                elif state.game_board[out_01[0]][out_01[1]] == -1 and state.game_board[out_02[0]][out_02[1]] == -1:
+                    score02 -= base_score * 2
+                # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
+                # print("대각선(우좌)")  # 디버깅
+
+        sum_score += int(score02)
 
         # score03 = 3개 연속을 만들 수 있으면 가능한 개수만큼 점수 부여
         score03 = 0
