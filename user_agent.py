@@ -728,6 +728,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
         score05 = 0
 
         # 공격
+        base_score = float('inf')
         # 가로
         for col in range(my_last_stone[0] - 4, my_last_stone[0] + 1):
             row = my_last_stone[1]
@@ -735,7 +736,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 continue
             if np.sum(state.game_board[row, col:col + 5]) == 5:
                 score05 += 100000000
-                score05 = float('inf')
+                score05 = base_score
                 return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
@@ -747,7 +748,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 continue
             if np.sum(state.game_board[row:row + 5, col]) == 5:
                 score05 += 100000000
-                score05 = float('inf')
+                score05 = base_score
                 return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
@@ -774,7 +775,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                     count_sum += 1
             if count_sum == 5:
                 score05 += 100000000
-                score05 = float('inf')
+                score05 = base_score
                 return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
@@ -801,12 +802,13 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                     count_sum += 1
             if count_sum == 5:
                 score05 += 100000000
-                score05 = float('inf')
+                score05 = base_score
                 return score05, (0, 0)
                 # print(f"x : {my_last_stone[0]}, y : {my_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
         # 방어
+        base_score = float('-inf')
         # 가로
         for col in range(opponent_last_stone[0] - 4, opponent_last_stone[0] + 1):
             row = opponent_last_stone[1]
@@ -814,7 +816,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 continue
             if np.sum(state.game_board[row, col:col + 5]) == -5:
                 # score05 -= 50000000
-                score05 = float('-inf')
+                score05 = base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
 
@@ -825,7 +827,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 continue
             if np.sum(state.game_board[row:row + 5, col]) == -5:
                 # score05 -= 50000000
-                score05 = float('-inf')
+                score05 = base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
 
@@ -851,7 +853,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                     count_sum += 1
             if count_sum == 5:
                 # score05 -= 50000000
-                score05 = float('-inf')
+                score05 = base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
 
@@ -877,7 +879,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                     count_sum += 1
             if count_sum == 5:
                 # score05 -= 50000000
-                score05 = float('-inf')
+                score05 = base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
 
