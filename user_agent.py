@@ -1099,6 +1099,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("가로")  # 디버깅
+                # print(f"score01 : {score01}, score02 : {score02}, score03 : {score03}, score04 : {score04}, "
+                #       f"score05 : {score05}")  # 디버깅
 
         # 세로
         for row in range(opponent_last_stone[1] - 4, opponent_last_stone[1] + 1):
@@ -1109,6 +1111,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("세로")  # 디버깅
+                # print(f"score01 : {score01}, score02 : {score02}, score03 : {score03}, score04 : {score04}, "
+                #       f"score05 : {score05}")  # 디버깅
 
         # 대각선 좌(상)우(하)
         for i in range(-4, 1):
@@ -1134,6 +1138,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(좌우)")  # 디버깅
+                # print(f"score01 : {score01}, score02 : {score02}, score03 : {score03}, score04 : {score04}, "
+                #       f"score05 : {score05}")  # 디버깅
 
         # 대각선 우(상)좌(하)
         for i in range(-4, 1):
@@ -1159,6 +1165,8 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
                 score05 -= base_score
                 # print(f"x : {opponent_last_stone[0]}, y : {opponent_last_stone[1]}")  # 디버깅
                 # print("대각선(우좌)")  # 디버깅
+                # print(f"score01 : {score01}, score02 : {score02}, score03 : {score03}, score04 : {score04}, "
+                #       f"score05 : {score05}")  # 디버깅
 
         sum_score += score05
 
@@ -1198,9 +1206,12 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
             value = max(value, child_value)
             if value == child_value:
                 returned_node = node
+                # print(value, node)  # 디버깅
             # print(a, b)  # 디버깅
             a = max(a, value)
-            if value >= b:
+            if value > b:
+                # print(f"{value} > {b}")  # 디버깅
+                # print("---브레이크---")  # 디버깅
                 break
         # print(returned_node)  # 디버깅
         return value, returned_node
@@ -1233,9 +1244,12 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
             value = min(value, child_value)
             if value == child_value:
                 returned_node = node
+                # print(value, node)  # 디버깅
             # print(a, b)  # 디버깅
             b = min(b, value)
-            if value <= a:
+            if value < a:
+                # print(f"{value} < {a}")  # 디버깅
+                # print("---브레이크---")  # 디버깅
                 break
         # print(returned_node)  # 디버깅
         return value, returned_node
