@@ -28,8 +28,8 @@ def act(state: OmokState):
     returned_node = returned_tuple[1]
     y_pos = returned_node[1]
     x_pos = returned_node[0]
-    print("점수 :", returned_tuple[0])  # 디버깅 용
-    print("좌표 :", returned_node)  # 디버깅 용
+    # print("점수 :", returned_tuple[0])  # 디버깅 용
+    # print("좌표 :", returned_node)  # 디버깅 용
     return y_pos, x_pos
 
 
