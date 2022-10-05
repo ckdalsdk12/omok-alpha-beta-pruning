@@ -1016,7 +1016,7 @@ def alphabeta(state: OmokState, depth, a, b, maximizingPlayer):
         score05 = 0
 
         # 공격
-        base_score = 100000000
+        base_score = 100000000 * 10
         # 가로
         for col in range(my_last_stone[0] - 4, my_last_stone[0] + 1):
             row = my_last_stone[1]
